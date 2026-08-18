@@ -1,0 +1,36 @@
+{
+    "GUAYAS": {
+        "GUAYAQUIL": [
+            "GUAYAQUIL",
+            "PASCUALES",
+            "CHONGÓN",
+            "PROGRESO"
+        ],
+        "DAULE": [
+            "DAULE",
+            "LA AURORA"
+        ],
+        "DURÁN": [
+            "DURÁN"
+        ],
+        "MILAGRO": [
+            "MILAGRO"
+        ],
+        "SAMBORONDÓN": [
+            "SAMBORONDÓN"
+        ]
+    },
+    "SANTA ELENA": {
+        "SANTA ELENA": [
+            "SANTA ELENA",
+            "MANGLARALTO",
+            "MONTAÑITA"
+        ],
+        "SALINAS": [
+            "SALINAS"
+        ],
+        "LA LIBERTAD": [
+            "LA LIBERTAD"
+        ]
+    }
+}
