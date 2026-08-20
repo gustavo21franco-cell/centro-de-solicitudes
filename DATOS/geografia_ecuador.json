@@ -1,36 +1,934 @@
 {
+    "AZUAY": {
+        "CUENCA": [
+            "CUENCA",
+            "BAÑOS",
+            "CUMBE",
+            "CHAUCHA",
+            "CHECA",
+            "CHIQUINTAD",
+            "LLACAO",
+            "MOLLETURO",
+            "NULTI",
+            "OCTAVIO CORDERO PALACIOS",
+            "PACCHA",
+            "QUINGEO",
+            "RICAURTE",
+            "SAN JOAQUÍN",
+            "SANTA ANA",
+            "SAYAUSÍ",
+            "SIDCAY",
+            "SININCAY",
+            "TARQUI",
+            "TURI",
+            "VALLE",
+            "VICTORIA DEL PORTETE"
+        ],
+        "GIRÓN": [
+            "GIRÓN",
+            "LA ASUNCIÓN",
+            "SAN GERARDO"
+        ],
+        "GUALACEO": [
+            "GUALACEO",
+            "DANIEL CÓRDOVA TORAL",
+            "JADÁN",
+            "MARIANO MORENO",
+            "REMIGIO CRESPO TORAL",
+            "SAN JUAN",
+            "ZHIDMAD",
+            "LUIS CORDERO VEGA",
+            "SIMÓN BOLÍVAR"
+        ],
+        "NABÓN": [
+            "NABÓN",
+            "COCHAPATA",
+            "EL PROGRESO",
+            "LAS NIEVES"
+        ],
+        "PAUTE": [
+            "PAUTE",
+            "AMALUZA",
+            "BULÁN",
+            "CHICÁN",
+            "EL CABO",
+            "GUARAINAG",
+            "SAN CRISTÓBAL",
+            "TOMEBAMBA"
+        ],
+        "PUCARÁ": [
+            "PUCARÁ",
+            "SAN RAFAEL DE SHARUG"
+        ],
+        "SAN FERNANDO": [
+            "SAN FERNANDO",
+            "CHUMBLÍN"
+        ],
+        "SANTA ISABEL": [
+            "SANTA ISABEL",
+            "ABDÓN CALDERÓN",
+            "SHAGLLI"
+        ],
+        "SEVILLA DE ORO": [
+            "SEVILLA DE ORO",
+            "AMALUZA",
+            "PALMAS"
+        ],
+        "GUACHAPALA": [
+            "GUACHAPALA"
+        ],
+        "CHORDELEG": [
+            "CHORDELEG",
+            "LA UNIÓN",
+            "LUIS CORDERO VEGA",
+            "PRINCIPAL",
+            "SAN MARTÍN DE PUZHIO"
+        ],
+        "EL PAN": [
+            "EL PAN",
+            "SAN VICENTE"
+        ],
+        "OÑA": [
+            "OÑA",
+            "SUSUDEL"
+        ],
+        "SÍGSIG": [
+            "SÍGSIG",
+            "CUCHIL",
+            "GIMA",
+            "GUEL",
+            "LUDO",
+            "SAN BARTOLOMÉ",
+            "SAN JOSÉ DE RARANGA"
+        ],
+        "CAMILO PONCE ENRÍQUEZ": [
+            "CAMILO PONCE ENRÍQUEZ",
+            "EL CARMEN DE PIJILÍ"
+        ]
+    },
+
+    "BOLÍVAR": {
+        "GUARANDA": [
+            "GUARANDA",
+            "ÁNGEL POLIBIO CHAVES",
+            "FACUNDO VELA",
+            "JULIO MORENO",
+            "SAN LORENZO",
+            "SAN LUIS DE PAMBIL",
+            "SAN SIMÓN",
+            "SANTA FE",
+            "SALINAS"
+        ],
+        "CHILLANES": [
+            "CHILLANES",
+            "SAN JOSÉ DEL TAMBO"
+        ],
+        "CHIMBO": [
+            "CHIMBO",
+            "LA ASUNCIÓN",
+            "LA MAGDALENA",
+            "SAN SEBASTIÁN"
+        ],
+        "ECHEANDÍA": [
+            "ECHEANDÍA"
+        ],
+        "SAN MIGUEL": [
+            "SAN MIGUEL",
+            "BALSAPAMBA",
+            "BILOVÁN",
+            "REGULO DE MORA",
+            "SAN PABLO DE ATENAS",
+            "SANTIAGO",
+            "SAN VICENTE"
+        ],
+        "CALUMA": [
+            "CALUMA",
+            "SAN ANTONIO"
+        ],
+        "LAS NAVES": [
+            "LAS NAVES"
+        ]
+    },
+
+    "CAÑAR": {
+        "AZOGUES": [
+            "AZOGUES",
+            "COJITAMBO",
+            "GUAPÁN",
+            "JAVIER LOYOLA",
+            "LUIS CORDERO",
+            "PINDILIG",
+            "RIVERA",
+            "SAN MIGUEL"
+        ],
+        "BIBLIÁN": [
+            "BIBLIÁN",
+            "JERUSALÉN",
+            "NAZÓN",
+            "SAN FRANCISCO DE SAGEO",
+            "TURUPAMBA"
+        ],
+        "CAÑAR": [
+            "CAÑAR",
+            "CHONTAMARCA",
+            "CHOROCOPTE",
+            "GENERAL MORALES",
+            "GUALLETURO",
+            "HONORATO VÁSQUEZ",
+            "INGAPIRCA",
+            "JUNCAL",
+            "VENTURA"
+        ],
+        "DÉLEG": [
+            "DÉLEG",
+            "SOLANO"
+        ],
+        "EL TAMBO": [
+            "EL TAMBO"
+        ],
+        "LA TRONCAL": [
+            "LA TRONCAL",
+            "MANUEL J. CALLE",
+            "PANCHO NEGRO"
+        ],
+        "SUSCAL": [
+            "SUSCAL"
+        ]
+    },
+
+    "CARCHI": {
+        "TULCÁN": [
+            "TULCÁN"
+        ],
+        "BOLÍVAR": [
+            "BOLÍVAR"
+        ],
+        "ESPEJO": [
+            "EL ÁNGEL",
+            "ESPEJO"
+        ],
+        "MIRA": [
+            "MIRA"
+        ],
+        "MONTÚFAR": [
+            "SAN GABRIEL",
+            "MONTÚFAR"
+        ],
+        "SAN PEDRO DE HUACA": [
+            "HUACA",
+            "SAN PEDRO DE HUACA"
+        ]
+    },
+
+    "CHIMBORAZO": {
+        "RIOBAMBA": [
+            "RIOBAMBA"
+        ],
+        "ALAUSÍ": [
+            "ALAUSÍ"
+        ],
+        "COLTA": [
+            "CAJABAMBA",
+            "COLTA"
+        ],
+        "CHAMBO": [
+            "CHAMBO"
+        ],
+        "CHUNCHI": [
+            "CHUNCHI"
+        ],
+        "GUAMOTE": [
+            "GUAMOTE",
+            "CEBADAS",
+            "PALMIRA"
+        ],
+        "GUANO": [
+            "GUANO",
+            "GUANANDO",
+            "ILAPO",
+            "LA PROVIDENCIA",
+            "SAN ANDRÉS",
+            "SAN GERARDO",
+            "SAN ISIDRO DE PATULÚ",
+            "SAN JOSÉ DEL CHAZO",
+            "SANTA FÉ DE GALÁN",
+            "VALPARAISO"
+        ],
+        "PALLATANGA": [
+            "PALLATANGA"
+        ],
+        "PENIPE": [
+            "PENIPE",
+            "EL ALTAR",
+            "MATUS",
+            "PUELA",
+            "SAN ANTONIO DE BAYUSHIG",
+            "LA CANDELARIA",
+            "BILBAO"
+        ],
+        "CUMANDÁ": [
+            "CUMANDÁ"
+        ]
+    },
+
+    "COTOPAXI": {
+        "LATACUNGA": [
+            "LATACUNGA"
+        ],
+        "LA MANÁ": [
+            "LA MANÁ"
+        ],
+        "PANGUA": [
+            "EL CORAZÓN",
+            "PANGUA"
+        ],
+        "PUJILÍ": [
+            "PUJILÍ"
+        ],
+        "SALCEDO": [
+            "SAN MIGUEL",
+            "SALCEDO"
+        ],
+        "SAQUISILÍ": [
+            "SAQUISILÍ"
+        ],
+        "SIGCHOS": [
+            "SIGCHOS"
+        ]
+    },
+
+    "EL ORO": {
+        "MACHALA": [
+            "MACHALA"
+        ],
+        "ARENILLAS": [
+            "ARENILLAS"
+        ],
+        "ATAHUALPA": [
+            "PACCHA",
+            "ATAHUALPA"
+        ],
+        "BALSAS": [
+            "BALSAS"
+        ],
+        "CHILLA": [
+            "CHILLA"
+        ],
+        "EL GUABO": [
+            "EL GUABO"
+        ],
+        "HUAQUILLAS": [
+            "HUAQUILLAS"
+        ],
+        "LAS LAJAS": [
+            "LA VICTORIA",
+            "LAS LAJAS"
+        ],
+        "MARCABELÍ": [
+            "MARCABELÍ"
+        ],
+        "PASAJE": [
+            "PASAJE"
+        ],
+        "PIÑAS": [
+            "PIÑAS"
+        ],
+        "PORTOVELO": [
+            "PORTOVELO"
+        ],
+        "SANTA ROSA": [
+            "SANTA ROSA"
+        ],
+        "ZARUMA": [
+            "ZARUMA"
+        ]
+    },
+
+    "ESMERALDAS": {
+        "ESMERALDAS": [
+            "ESMERALDAS"
+        ],
+        "ATACAMES": [
+            "ATACAMES",
+            "TONSUPA"
+        ],
+        "ELOY ALFARO": [
+            "LIMONES",
+            "ELOY ALFARO"
+        ],
+        "MUISNE": [
+            "MUISNE"
+        ],
+        "QUININDÉ": [
+            "ROSA ZÁRATE",
+            "QUININDÉ"
+        ],
+        "RIOVERDE": [
+            "RIOVERDE"
+        ],
+        "SAN LORENZO": [
+            "SAN LORENZO"
+        ]
+    },
+
+    "GALÁPAGOS": {
+        "SAN CRISTÓBAL": [
+            "PUERTO BAQUERIZO MORENO",
+            "SAN CRISTÓBAL"
+        ],
+        "ISABELA": [
+            "PUERTO VILLAMIL",
+            "ISABELA"
+        ],
+        "SANTA CRUZ": [
+            "PUERTO AYORA",
+            "SANTA CRUZ"
+        ]
+    },
+
     "GUAYAS": {
         "GUAYAQUIL": [
             "GUAYAQUIL",
             "PASCUALES",
             "CHONGÓN",
-            "PROGRESO"
+            "PROGRESO",
+            "POSORJA",
+            "EL MORRO",
+            "PUNÁ",
+            "TENGUEL"
         ],
         "DAULE": [
             "DAULE",
-            "LA AURORA"
+            "LA AURORA",
+            "LIMONAL",
+            "LOS LOJAS"
         ],
         "DURÁN": [
             "DURÁN"
         ],
         "MILAGRO": [
-            "MILAGRO"
+            "MILAGRO",
+            "CHOBO",
+            "MARISCAL SUCRE",
+            "ROBERTO ASTUDILLO"
         ],
         "SAMBORONDÓN": [
-            "SAMBORONDÓN"
+            "SAMBORONDÓN",
+            "LA PUNTILLA",
+            "TARIFA"
+        ],
+        "ALFREDO BAQUERIZO MORENO": [
+            "JUJÁN"
+        ],
+        "BALAO": [
+            "BALAO"
+        ],
+        "BALZAR": [
+            "BALZAR"
+        ],
+        "COLIMES": [
+            "COLIMES"
+        ],
+        "EL EMPALME": [
+            "EL EMPALME",
+            "VELASCO IBARRA"
+        ],
+        "EL TRIUNFO": [
+            "EL TRIUNFO"
+        ],
+        "GENERAL ANTONIO ELIZALDE": [
+            "BUCAY"
+        ],
+        "ISIDRO AYORA": [
+            "ISIDRO AYORA"
+        ],
+        "LOMAS DE SARGENTILLO": [
+            "LOMAS DE SARGENTILLO"
+        ],
+        "NARANJAL": [
+            "NARANJAL",
+            "JESÚS MARÍA",
+            "SAN CARLOS",
+            "SANTA ROSA DE FLANDES"
+        ],
+        "NARANJITO": [
+            "NARANJITO"
+        ],
+        "NOBOL": [
+            "NOBOL",
+            "NARCISA DE JESÚS"
+        ],
+        "PALESTINA": [
+            "PALESTINA"
+        ],
+        "PEDRO CARBO": [
+            "PEDRO CARBO",
+            "VALLE DE LA VIRGEN",
+            "SABANILLA"
+        ],
+        "PLAYAS": [
+            "GENERAL VILLAMIL",
+            "PLAYAS"
+        ],
+        "SALITRE": [
+            "SALITRE",
+            "JUNQUILLAL",
+            "LA VICTORIA",
+            "VERNAZA"
+        ],
+        "SANTA LUCÍA": [
+            "SANTA LUCÍA"
+        ],
+        "SIMÓN BOLÍVAR": [
+            "SIMÓN BOLÍVAR",
+            "CRNEL. LORENZO DE GARAICOA"
+        ],
+        "YAGUACHI": [
+            "YAGUACHI",
+            "YAGUACHI NUEVO",
+            "YAGUACHI VIEJO",
+            "VIRGEN DE FÁTIMA",
+            "CONE"
+        ],
+        "CORONEL MARCELINO MARIDUEÑA": [
+            "CORONEL MARCELINO MARIDUEÑA"
         ]
     },
+
+    "IMBABURA": {
+        "IBARRA": [
+            "IBARRA"
+        ],
+        "ANTONIO ANTE": [
+            "ATUNTAQUI",
+            "ANTONIO ANTE"
+        ],
+        "COTACACHI": [
+            "COTACACHI"
+        ],
+        "OTAVALO": [
+            "OTAVALO"
+        ],
+        "PIMAMPIRO": [
+            "PIMAMPIRO"
+        ],
+        "SAN MIGUEL DE URCUQUÍ": [
+            "URCUQUÍ",
+            "SAN MIGUEL DE URCUQUÍ"
+        ]
+    },
+
+    "LOJA": {
+        "LOJA": [
+            "LOJA"
+        ],
+        "CALVAS": [
+            "CARIAMANGA",
+            "CALVAS"
+        ],
+        "CATAMAYO": [
+            "CATAMAYO"
+        ],
+        "CELICA": [
+            "CELICA"
+        ],
+        "CHAGUARPAMBA": [
+            "CHAGUARPAMBA"
+        ],
+        "ESPÍNDOLA": [
+            "AMALUZA",
+            "ESPÍNDOLA"
+        ],
+        "GONZANAMÁ": [
+            "GONZANAMÁ"
+        ],
+        "MACARÁ": [
+            "MACARÁ"
+        ],
+        "OLMEDO": [
+            "OLMEDO"
+        ],
+        "PALTAS": [
+            "CATACOCHA",
+            "PALTAS"
+        ],
+        "PINDAL": [
+            "PINDAL"
+        ],
+        "PUYANGO": [
+            "ALAMOR",
+            "PUYANGO"
+        ],
+        "QUILANGA": [
+            "QUILANGA"
+        ],
+        "SARAGURO": [
+            "SARAGURO"
+        ],
+        "SOZORANGA": [
+            "SOZORANGA"
+        ],
+        "ZAPOTILLO": [
+            "ZAPOTILLO"
+        ]
+    },
+
+    "LOS RÍOS": {
+        "BABAHOYO": [
+            "BABAHOYO"
+        ],
+        "BABA": [
+            "BABA"
+        ],
+        "BUENA FE": [
+            "SAN JACINTO DE BUENA FE",
+            "BUENA FE"
+        ],
+        "MOCACHE": [
+            "MOCACHE"
+        ],
+        "MONTALVO": [
+            "MONTALVO"
+        ],
+        "PALENQUE": [
+            "PALENQUE"
+        ],
+        "PUEBLOVIEJO": [
+            "PUEBLOVIEJO"
+        ],
+        "QUEVEDO": [
+            "QUEVEDO"
+        ],
+        "QUINSALOMA": [
+            "QUINSALOMA"
+        ],
+        "URDANETA": [
+            "CATARAMA",
+            "URDANETA"
+        ],
+        "VALENCIA": [
+            "VALENCIA"
+        ],
+        "VENTANAS": [
+            "VENTANAS"
+        ],
+        "VINCES": [
+            "VINCES"
+        ]
+    },
+
+    "MANABÍ": {
+        "PORTOVIEJO": [
+            "PORTOVIEJO"
+        ],
+        "24 DE MAYO": [
+            "SUCRE",
+            "24 DE MAYO"
+        ],
+        "BOLÍVAR": [
+            "CALCETA",
+            "BOLÍVAR"
+        ],
+        "CHONE": [
+            "CHONE"
+        ],
+        "EL CARMEN": [
+            "EL CARMEN"
+        ],
+        "FLAVIO ALFARO": [
+            "FLAVIO ALFARO"
+        ],
+        "JAMA": [
+            "JAMA"
+        ],
+        "JARAMIJÓ": [
+            "JARAMIJÓ"
+        ],
+        "JIPIJAPA": [
+            "JIPIJAPA"
+        ],
+        "JUNÍN": [
+            "JUNÍN"
+        ],
+        "MANTA": [
+            "MANTA"
+        ],
+        "MONTECRISTI": [
+            "MONTECRISTI"
+        ],
+        "OLMEDO": [
+            "OLMEDO"
+        ],
+        "PAJÁN": [
+            "PAJÁN"
+        ],
+        "PEDERNALES": [
+            "PEDERNALES"
+        ],
+        "PICHINCHA": [
+            "PICHINCHA"
+        ],
+        "PUERTO LÓPEZ": [
+            "PUERTO LÓPEZ"
+        ],
+        "ROCAFUERTE": [
+            "ROCAFUERTE"
+        ],
+        "SAN VICENTE": [
+            "SAN VICENTE"
+        ],
+        "SANTA ANA": [
+            "SANTA ANA"
+        ],
+        "SUCRE": [
+            "BAHÍA DE CARÁQUEZ",
+            "SUCRE"
+        ],
+        "TOSAGUA": [
+            "TOSAGUA"
+        ]
+    },
+
+    "MORONA SANTIAGO": {
+        "MORONA": [
+            "MACAS",
+            "MORONA"
+        ],
+        "GUALAQUIZA": [
+            "GUALAQUIZA"
+        ],
+        "HUAMBOYA": [
+            "HUAMBOYA"
+        ],
+        "LIMÓN INDANZA": [
+            "GENERAL LEONIDAS PLAZA",
+            "LIMÓN INDANZA"
+        ],
+        "LOGROÑO": [
+            "LOGROÑO"
+        ],
+        "PABLO SEXTO": [
+            "PABLO SEXTO"
+        ],
+        "PALORA": [
+            "PALORA"
+        ],
+        "SAN JUAN BOSCO": [
+            "SAN JUAN BOSCO"
+        ],
+        "SANTIAGO": [
+            "SANTIAGO"
+        ],
+        "SUCÚA": [
+            "SUCÚA"
+        ],
+        "TAISHA": [
+            "TAISHA"
+        ]
+    },
+
+    "NAPO": {
+        "TENA": [
+            "TENA"
+        ],
+        "ARCHIDONA": [
+            "ARCHIDONA"
+        ],
+        "CARLOS JULIO AROSEMENA TOLA": [
+            "CARLOS JULIO AROSEMENA TOLA"
+        ],
+        "EL CHACO": [
+            "EL CHACO"
+        ],
+        "QUIJOS": [
+            "BAEZA",
+            "QUIJOS"
+        ]
+    },
+
+    "ORELLANA": {
+        "FRANCISCO DE ORELLANA": [
+            "EL COCA",
+            "FRANCISCO DE ORELLANA"
+        ],
+        "AGUARICO": [
+            "NUEVO ROCAFUERTE",
+            "AGUARICO"
+        ],
+        "LA JOYA DE LOS SACHAS": [
+            "LA JOYA DE LOS SACHAS"
+        ],
+        "LORETO": [
+            "LORETO"
+        ]
+    },
+
+    "PASTAZA": {
+        "PASTAZA": [
+            "PUYO",
+            "PASTAZA"
+        ],
+        "ARAJUNO": [
+            "ARAJUNO"
+        ],
+        "MERA": [
+            "MERA"
+        ],
+        "SANTA CLARA": [
+            "SANTA CLARA"
+        ]
+    },
+
+    "PICHINCHA": {
+        "QUITO": [
+            "QUITO"
+        ],
+        "CAYAMBE": [
+            "CAYAMBE"
+        ],
+        "MEJÍA": [
+            "MACHACHI",
+            "MEJÍA"
+        ],
+        "PEDRO MONCAYO": [
+            "TABACUNDO",
+            "PEDRO MONCAYO"
+        ],
+        "PEDRO VICENTE MALDONADO": [
+            "PEDRO VICENTE MALDONADO"
+        ],
+        "PUERTO QUITO": [
+            "PUERTO QUITO"
+        ],
+        "RUMIÑAHUI": [
+            "SANGOLQUÍ",
+            "RUMIÑAHUI"
+        ],
+        "SAN MIGUEL DE LOS BANCOS": [
+            "SAN MIGUEL DE LOS BANCOS"
+        ]
+    },
+
     "SANTA ELENA": {
         "SANTA ELENA": [
             "SANTA ELENA",
             "MANGLARALTO",
-            "MONTAÑITA"
+            "MONTAÑITA",
+            "ATAHUALPA",
+            "COLONCHE",
+            "CHANDUY",
+            "SAN JOSÉ DE ANCÓN"
         ],
         "SALINAS": [
-            "SALINAS"
+            "SALINAS",
+            "ANCONCITO",
+            "JOSÉ LUIS TAMAYO"
         ],
         "LA LIBERTAD": [
             "LA LIBERTAD"
+        ]
+    },
+
+    "SANTO DOMINGO DE LOS TSÁCHILAS": {
+        "SANTO DOMINGO": [
+            "SANTO DOMINGO"
+        ],
+        "LA CONCORDIA": [
+            "LA CONCORDIA"
+        ]
+    },
+
+    "SUCUMBÍOS": {
+        "LAGO AGRIO": [
+            "NUEVA LOJA",
+            "LAGO AGRIO"
+        ],
+        "CASCALES": [
+            "EL DORADO DE CASCALES",
+            "CASCALES"
+        ],
+        "CUYABENO": [
+            "TARAPOA",
+            "CUYABENO"
+        ],
+        "GONZALO PIZARRO": [
+            "LUMBAQUÍ",
+            "GONZALO PIZARRO"
+        ],
+        "PUTUMAYO": [
+            "PUERTO EL CARMEN",
+            "PUTUMAYO"
+        ],
+        "SHUSHUFINDI": [
+            "SHUSHUFINDI"
+        ],
+        "SUCUMBÍOS": [
+            "LA BONITA",
+            "SUCUMBÍOS"
+        ]
+    },
+
+    "TUNGURAHUA": {
+        "AMBATO": [
+            "AMBATO"
+        ],
+        "BAÑOS DE AGUA SANTA": [
+            "BAÑOS DE AGUA SANTA"
+        ],
+        "CEVALLOS": [
+            "CEVALLOS"
+        ],
+        "MOCHA": [
+            "MOCHA"
+        ],
+        "PATATE": [
+            "PATATE"
+        ],
+        "PELILEO": [
+            "PELILEO"
+        ],
+        "PÍLLARO": [
+            "PÍLLARO"
+        ],
+        "QUERO": [
+            "QUERO"
+        ],
+        "TISALEO": [
+            "TISALEO"
+        ]
+    },
+
+    "ZAMORA CHINCHIPE": {
+        "ZAMORA": [
+            "ZAMORA"
+        ],
+        "CHINCHIPE": [
+            "ZUMBA",
+            "CHINCHIPE"
+        ],
+        "NANGARITZA": [
+            "GUAYZIMI",
+            "NANGARITZA"
+        ],
+        "YACUAMBI": [
+            "28 DE MAYO",
+            "YACUAMBI"
+        ],
+        "YANTZAZA": [
+            "YANTZAZA"
+        ],
+        "EL PANGUI": [
+            "EL PANGUI"
+        ],
+        "CENTINELA DEL CÓNDOR": [
+            "ZUMBI",
+            "CENTINELA DEL CÓNDOR"
+        ],
+        "PALANDA": [
+            "PALANDA"
+        ],
+        "PAQUISHA": [
+            "PAQUISHA"
         ]
     }
 }
