@@ -106,7 +106,6 @@
             "EL CARMEN DE PIJILÍ"
         ]
     },
-
     "BOLÍVAR": {
         "GUARANDA": [
             "GUARANDA",
@@ -149,7 +148,6 @@
             "LAS NAVES"
         ]
     },
-
     "CAÑAR": {
         "AZOGUES": [
             "AZOGUES",
@@ -195,7 +193,6 @@
             "SUSCAL"
         ]
     },
-
     "CARCHI": {
         "TULCÁN": [
             "TULCÁN"
@@ -219,7 +216,6 @@
             "SAN PEDRO DE HUACA"
         ]
     },
-
     "CHIMBORAZO": {
         "RIOBAMBA": [
             "RIOBAMBA"
@@ -270,7 +266,6 @@
             "CUMANDÁ"
         ]
     },
-
     "COTOPAXI": {
         "LATACUNGA": [
             "LATACUNGA"
@@ -296,7 +291,6 @@
             "SIGCHOS"
         ]
     },
-
     "EL ORO": {
         "MACHALA": [
             "MACHALA"
@@ -343,7 +337,6 @@
             "ZARUMA"
         ]
     },
-
     "ESMERALDAS": {
         "ESMERALDAS": [
             "ESMERALDAS"
@@ -354,7 +347,8 @@
         ],
         "ELOY ALFARO": [
             "LIMONES",
-            "ELOY ALFARO"
+            "ELOY ALFARO", 
+            "BORBÓN"
         ],
         "MUISNE": [
             "MUISNE"
@@ -370,7 +364,6 @@
             "SAN LORENZO"
         ]
     },
-
     "GALÁPAGOS": {
         "SAN CRISTÓBAL": [
             "PUERTO BAQUERIZO MORENO",
@@ -385,7 +378,6 @@
             "SANTA CRUZ"
         ]
     },
-
     "GUAYAS": {
         "GUAYAQUIL": [
             "GUAYAQUIL",
@@ -494,7 +486,6 @@
             "CORONEL MARCELINO MARIDUEÑA"
         ]
     },
-
     "IMBABURA": {
         "IBARRA": [
             "IBARRA"
@@ -517,7 +508,6 @@
             "SAN MIGUEL DE URCUQUÍ"
         ]
     },
-
     "LOJA": {
         "LOJA": [
             "LOJA"
@@ -572,7 +562,6 @@
             "ZAPOTILLO"
         ]
     },
-
     "LOS RÍOS": {
         "BABAHOYO": [
             "BABAHOYO"
@@ -616,7 +605,6 @@
             "VINCES"
         ]
     },
-
     "MANABÍ": {
         "PORTOVIEJO": [
             "PORTOVIEJO"
@@ -688,7 +676,6 @@
             "TOSAGUA"
         ]
     },
-
     "MORONA SANTIAGO": {
         "MORONA": [
             "MACAS",
@@ -726,7 +713,6 @@
             "TAISHA"
         ]
     },
-
     "NAPO": {
         "TENA": [
             "TENA"
@@ -745,7 +731,6 @@
             "QUIJOS"
         ]
     },
-
     "ORELLANA": {
         "FRANCISCO DE ORELLANA": [
             "EL COCA",
@@ -762,7 +747,6 @@
             "LORETO"
         ]
     },
-
     "PASTAZA": {
         "PASTAZA": [
             "PUYO",
@@ -778,7 +762,6 @@
             "SANTA CLARA"
         ]
     },
-
     "PICHINCHA": {
         "QUITO": [
             "QUITO"
@@ -808,7 +791,6 @@
             "SAN MIGUEL DE LOS BANCOS"
         ]
     },
-
     "SANTA ELENA": {
         "SANTA ELENA": [
             "SANTA ELENA",
@@ -828,7 +810,6 @@
             "LA LIBERTAD"
         ]
     },
-
     "SANTO DOMINGO DE LOS TSÁCHILAS": {
         "SANTO DOMINGO": [
             "SANTO DOMINGO"
@@ -837,7 +818,6 @@
             "LA CONCORDIA"
         ]
     },
-
     "SUCUMBÍOS": {
         "LAGO AGRIO": [
             "NUEVA LOJA",
@@ -867,7 +847,6 @@
             "SUCUMBÍOS"
         ]
     },
-
     "TUNGURAHUA": {
         "AMBATO": [
             "AMBATO"
@@ -897,7 +876,6 @@
             "TISALEO"
         ]
     },
-
     "ZAMORA CHINCHIPE": {
         "ZAMORA": [
             "ZAMORA"

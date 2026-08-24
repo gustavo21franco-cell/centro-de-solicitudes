@@ -3,8 +3,13 @@ from tkinter import messagebox, ttk
 import webbrowser
 import urllib.parse
 import os
+import json
 
-from config import CORREOS_DESTINO, DESTINATARIOS_POR_DEFECTO
+
+from config import (
+    CORREOS_DESTINO,
+    DESTINATARIOS_POR_DEFECTO
+)
 
 
 # ============================================================
@@ -28,310 +33,100 @@ VERDE_HOVER = "#116D37"
 
 
 # ============================================================
-# PROVINCIAS Y CIUDADES
+# CARGAR GEOGRAFÍA DESDE JSON
 # ============================================================
 
-PROVINCIAS_CIUDADES = {
+def cargar_geografia():
 
-    "Azuay": [
-        "Cuenca",
-        "Camilo Ponce Enríquez",
-        "Chordeleg",
-        "El Pan",
-        "Girón",
-        "Guachapala",
-        "Gualaceo",
-        "Nabón",
-        "Oña",
-        "Paute",
-        "Pucará",
-        "San Fernando",
-        "Santa Isabel",
-        "Sevilla de Oro",
-        "Sígsig"
-    ],
+    base_dir = os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
 
-    "Bolívar": [
-        "Caluma",
-        "Chillanes",
-        "Chimbo",
-        "Echeandía",
-        "Guaranda",
-        "Las Naves",
-        "San Miguel"
-    ],
+    archivo_geografia = os.path.join(
+        base_dir,
+        "DATOS",
+        "geografia_ecuador.json"
+    )
 
-    "Cañar": [
-        "Azogues",
-        "Biblián",
-        "Cañar",
-        "Déleg",
-        "El Tambo",
-        "La Troncal",
-        "Suscal"
-    ],
+    try:
 
-    "Carchi": [
-        "Bolívar",
-        "Espejo",
-        "Mira",
-        "Montúfar",
-        "San Pedro de Huaca",
-        "Tulcán"
-    ],
+        if not os.path.exists(
+            archivo_geografia
+        ):
 
-    "Chimborazo": [
-        "Alausí",
-        "Chambo",
-        "Chunchi",
-        "Colta",
-        "Cumandá",
-        "Guamote",
-        "Guano",
-        "Pallatanga",
-        "Penipe",
-        "Riobamba"
-    ],
+            messagebox.showerror(
+                "Error de datos",
+                "No se encontró el archivo:\n\n"
+                "DATOS/geografia_ecuador.json\n\n"
+                "Verifique que el archivo exista."
+            )
 
-    "Cotopaxi": [
-        "La Maná",
-        "Latacunga",
-        "Pangua",
-        "Pujilí",
-        "Salcedo",
-        "Saquisilí",
-        "Sigchos"
-    ],
+            return {}
 
-    "El Oro": [
-        "Arenillas",
-        "Atahualpa",
-        "Balsas",
-        "Chilla",
-        "El Guabo",
-        "Huaquillas",
-        "Las Lajas",
-        "Machala",
-        "Marcabelí",
-        "Pasaje",
-        "Piñas",
-        "Portovelo",
-        "Santa Rosa",
-        "Zaruma"
-    ],
+        with open(
+            archivo_geografia,
+            "r",
+            encoding="utf-8"
+        ) as archivo:
 
-    "Esmeraldas": [
-        "Atacames",
-        "Eloy Alfaro",
-        "Esmeraldas",
-        "Muisne",
-        "Quinindé",
-        "Rioverde",
-        "San Lorenzo"
-    ],
+            datos = json.load(
+                archivo
+            )
 
-    "Galápagos": [
-        "Isabela",
-        "San Cristóbal",
-        "Santa Cruz"
-    ],
+        if not isinstance(
+            datos,
+            dict
+        ):
 
-    "Guayas": [
-        "Alfredo Baquerizo Moreno",
-        "Balao",
-        "Balzar",
-        "Colimes",
-        "Coronel Marcelino Maridueña",
-        "Daule",
-        "Durán",
-        "El Empalme",
-        "El Triunfo",
-        "General Antonio Elizalde",
-        "Guayaquil",
-        "Isidro Ayora",
-        "Lomas de Sargentillo",
-        "Milagro",
-        "Naranjal",
-        "Naranjito",
-        "Nobol",
-        "Palestina",
-        "Pedro Carbo",
-        "Playas",
-        "Salitre",
-        "Samborondón",
-        "Santa Lucía",
-        "Simón Bolívar",
-        "Yaguachi"
-    ],
+            raise ValueError(
+                "El archivo geografia_ecuador.json "
+                "no contiene una estructura válida."
+            )
 
-    "Imbabura": [
-        "Antonio Ante",
-        "Cotacachi",
-        "Ibarra",
-        "Otavalo",
-        "Pimampiro",
-        "San Miguel de Urcuquí"
-    ],
+        if len(datos) != 24:
 
-    "Loja": [
-        "Calvas",
-        "Catamayo",
-        "Celica",
-        "Chaguarpamba",
-        "Espíndola",
-        "Gonzanamá",
-        "Loja",
-        "Macará",
-        "Olmedo",
-        "Paltas",
-        "Pindal",
-        "Puyango",
-        "Quilanga",
-        "Saraguro",
-        "Sozoranga",
-        "Zapotillo"
-    ],
+            raise ValueError(
+                "El archivo geografia_ecuador.json "
+                f"contiene {len(datos)} provincias. "
+                "Se esperaban 24."
+            )
 
-    "Los Ríos": [
-        "Baba",
-        "Babahoyo",
-        "Buena Fe",
-        "Mocache",
-        "Montalvo",
-        "Palenque",
-        "Puebloviejo",
-        "Quevedo",
-        "Quinsaloma",
-        "Urdaneta",
-        "Valencia",
-        "Ventanas",
-        "Vinces"
-    ],
+        return datos
 
-    "Manabí": [
-        "24 de Mayo",
-        "Bolívar",
-        "Chone",
-        "El Carmen",
-        "Flavio Alfaro",
-        "Jama",
-        "Jaramijó",
-        "Jipijapa",
-        "Junín",
-        "Manta",
-        "Montecristi",
-        "Olmedo",
-        "Paján",
-        "Pedernales",
-        "Pichincha",
-        "Portoviejo",
-        "Puerto López",
-        "Rocafuerte",
-        "San Vicente",
-        "Santa Ana",
-        "Sucre",
-        "Tosagua"
-    ],
+    except json.JSONDecodeError as error:
 
-    "Morona Santiago": [
-        "Gualaquiza",
-        "Huamboya",
-        "Limón Indanza",
-        "Logroño",
-        "Morona",
-        "Pablo Sexto",
-        "Palora",
-        "San Juan Bosco",
-        "Santiago",
-        "Sucúa",
-        "Taisha"
-    ],
+        messagebox.showerror(
+            "Error de datos",
+            "El archivo geografia_ecuador.json "
+            "no contiene un JSON válido.\n\n"
+            f"Detalle: {error}"
+        )
 
-    "Napo": [
-        "Archidona",
-        "Carlos Julio Arosemena Tola",
-        "El Chaco",
-        "Quijos",
-        "Tena"
-    ],
+        return {}
 
-    "Orellana": [
-        "Aguarico",
-        "La Joya de los Sachas",
-        "Loreto",
-        "Francisco de Orellana EL COCA"
-    ],
+    except Exception as error:
 
-    "Pastaza": [
-        "Arajuno",
-        "Mera",
-        "Pastaza",
-        "Santa Clara"
-    ],
+        messagebox.showerror(
+            "Error de datos",
+            "No se pudo cargar la información "
+            "geográfica.\n\n"
+            f"Detalle: {error}"
+        )
 
-    "Pichincha": [
-        "Cayambe",
-        "Mejía",
-        "Pedro Moncayo",
-        "Pedro Vicente Maldonado",
-        "Puerto Quito",
-        "Quito",
-        "Rumiñahui",
-        "San Miguel de los Bancos"
-    ],
-
-    "Santa Elena": [
-        "La Libertad",
-        "Salinas",
-        "Santa Elena"
-    ],
-
-    "Santo Domingo de los Tsáchilas": [
-        "La Concordia",
-        "Santo Domingo"
-    ],
-
-    "Sucumbíos": [
-        "Cascales",
-        "Cuyabeno",
-        "Gonzalo Pizarro",
-        "Lago Agrio",
-        "Putumayo",
-        "Shushufindi",
-        "Sucumbíos"
-    ],
-
-    "Tungurahua": [
-        "Ambato",
-        "Baños de Agua Santa",
-        "Cevallos",
-        "Mocha",
-        "Patate",
-        "Pelileo",
-        "Píllaro",
-        "Quero",
-        "Tisaleo"
-    ],
-
-    "Zamora Chinchipe": [
-        "Centinela del Cóndor",
-        "Chinchipe",
-        "El Pangui",
-        "Nangaritza",
-        "Palanda",
-        "Paquisha",
-        "Yacuambi",
-        "Yantzaza",
-        "Zamora"
-    ]
-}
+        return {}
 
 
 # ============================================================
 # FUNCIONES VISUALES
 # ============================================================
 
-def crear_label(parent, texto, obligatorio=False):
+def crear_label(
+    parent,
+    texto,
+    obligatorio=False
+):
 
     frame = tk.Frame(
         parent,
@@ -346,10 +141,18 @@ def crear_label(parent, texto, obligatorio=False):
 
     etiqueta = tk.Label(
         frame,
-        text=texto + (" *" if obligatorio else ""),
+        text=texto + (
+            " *"
+            if obligatorio
+            else ""
+        ),
         bg=BLANCO,
         fg=TEXTO,
-        font=("Segoe UI", 10, "bold"),
+        font=(
+            "Segoe UI",
+            10,
+            "bold"
+        ),
         anchor="w"
     )
 
@@ -371,20 +174,31 @@ def estilizar_entry(entry):
         highlightthickness=1,
         highlightbackground=BORDE,
         highlightcolor=AZUL,
-        font=("Segoe UI", 10)
+        font=(
+            "Segoe UI",
+            10
+        )
     )
 
 
-def agregar_hover(boton, normal, hover):
+def agregar_hover(
+    boton,
+    normal,
+    hover
+):
 
     boton.bind(
         "<Enter>",
-        lambda e: boton.configure(bg=hover)
+        lambda e: boton.configure(
+            bg=hover
+        )
     )
 
     boton.bind(
         "<Leave>",
-        lambda e: boton.configure(bg=normal)
+        lambda e: boton.configure(
+            bg=normal
+        )
     )
 
 
@@ -394,12 +208,39 @@ def agregar_hover(boton, normal, hover):
 
 def abrir_servientrega():
 
+    # ========================================================
+    # CARGAR GEOGRAFÍA
+    # ========================================================
+
+    PROVINCIAS_CIUDADES = cargar_geografia()
+
+    if not PROVINCIAS_CIUDADES:
+
+        return
+
+    # ========================================================
+    # VENTANA
+    # ========================================================
+
     ventana = tk.Toplevel()
 
-    ventana.title("Envío por Servientrega")
-    ventana.geometry("620x900")
-    ventana.minsize(560, 760)
-    ventana.resizable(True, True)
+    ventana.title(
+        "Envío por Servientrega"
+    )
+
+    ventana.geometry(
+        "620x900"
+    )
+
+    ventana.minsize(
+        560,
+        760
+    )
+
+    ventana.resizable(
+        True,
+        True
+    )
 
     ventana.configure(
         bg=FONDO
@@ -420,11 +261,18 @@ def abrir_servientrega():
         "logo.ico"
     )
 
-    if os.path.exists(ruta_icono):
+    if os.path.exists(
+        ruta_icono
+    ):
 
         try:
-            ventana.iconbitmap(ruta_icono)
+
+            ventana.iconbitmap(
+                ruta_icono
+            )
+
         except Exception:
+
             pass
 
     # ========================================================
@@ -434,8 +282,13 @@ def abrir_servientrega():
     estilo = ttk.Style()
 
     try:
-        estilo.theme_use("clam")
+
+        estilo.theme_use(
+            "clam"
+        )
+
     except Exception:
+
         pass
 
     estilo.configure(
@@ -447,16 +300,25 @@ def abrir_servientrega():
         lightcolor=BORDE,
         darkcolor=BORDE,
         padding=7,
-        font=("Segoe UI", 10)
+        font=(
+            "Segoe UI",
+            10
+        )
     )
 
     estilo.map(
         "Servientrega.TCombobox",
         fieldbackground=[
-            ("readonly", BLANCO)
+            (
+                "readonly",
+                BLANCO
+            )
         ],
         foreground=[
-            ("readonly", TEXTO)
+            (
+                "readonly",
+                TEXTO
+            )
         ]
     )
 
@@ -474,7 +336,9 @@ def abrir_servientrega():
         fill="x"
     )
 
-    encabezado.pack_propagate(False)
+    encabezado.pack_propagate(
+        False
+    )
 
     # ========================================================
     # LOGO
@@ -487,7 +351,9 @@ def abrir_servientrega():
 
     logo_imagen = None
 
-    if os.path.exists(ruta_logo):
+    if os.path.exists(
+        ruta_logo
+    ):
 
         try:
 
@@ -520,17 +386,20 @@ def abrir_servientrega():
                     factor
                 )
 
-            tk.Label(
+            etiqueta_logo = tk.Label(
                 encabezado,
                 image=logo_imagen,
                 bg=AZUL_OSCURO
-            ).place(
+            )
+
+            etiqueta_logo.place(
                 x=25,
                 rely=0.5,
                 anchor="w"
             )
 
         except Exception:
+
             pass
 
     # ========================================================
@@ -542,7 +411,11 @@ def abrir_servientrega():
         text="JETELL",
         bg=AZUL_OSCURO,
         fg=BLANCO,
-        font=("Segoe UI", 22, "bold")
+        font=(
+            "Segoe UI",
+            22,
+            "bold"
+        )
     ).place(
         x=145,
         y=38,
@@ -558,7 +431,11 @@ def abrir_servientrega():
         text="SOLICITUD DE ENVÍO POR SERVIENTREGA",
         bg=AZUL_OSCURO,
         fg="#DCEBFA",
-        font=("Segoe UI", 10, "bold")
+        font=(
+            "Segoe UI",
+            10,
+            "bold"
+        )
     ).place(
         x=145,
         y=70,
@@ -566,28 +443,28 @@ def abrir_servientrega():
     )
 
     # ========================================================
-    # CANVAS + SCROLL
+    # CONTENEDOR DEL SCROLL
+    # ========================================================
+
+    contenedor_scroll = tk.Frame(
+        ventana,
+        bg=FONDO
+    )
+
+    contenedor_scroll.pack(
+        fill="both",
+        expand=True
+    )
+
+    # ========================================================
+    # CANVAS
     # ========================================================
 
     canvas = tk.Canvas(
-        ventana,
+        contenedor_scroll,
         bg=FONDO,
-        highlightthickness=0
-    )
-
-    scrollbar = ttk.Scrollbar(
-        ventana,
-        orient="vertical",
-        command=canvas.yview
-    )
-
-    canvas.configure(
-        yscrollcommand=scrollbar.set
-    )
-
-    scrollbar.pack(
-        side="right",
-        fill="y"
+        highlightthickness=0,
+        borderwidth=0
     )
 
     canvas.pack(
@@ -595,6 +472,29 @@ def abrir_servientrega():
         fill="both",
         expand=True
     )
+
+    # ========================================================
+    # SCROLLBAR
+    # ========================================================
+
+    scrollbar = ttk.Scrollbar(
+        contenedor_scroll,
+        orient="vertical",
+        command=canvas.yview
+    )
+
+    scrollbar.pack(
+        side="right",
+        fill="y"
+    )
+
+    canvas.configure(
+        yscrollcommand=scrollbar.set
+    )
+
+    # ========================================================
+    # CONTENIDO
+    # ========================================================
 
     contenido = tk.Frame(
         canvas,
@@ -607,10 +507,18 @@ def abrir_servientrega():
         anchor="nw"
     )
 
-    def actualizar_scroll(event=None):
+    # ========================================================
+    # ACTUALIZAR SCROLLREGION
+    # ========================================================
+
+    def actualizar_scroll(
+        event=None
+    ):
 
         canvas.configure(
-            scrollregion=canvas.bbox("all")
+            scrollregion=canvas.bbox(
+                "all"
+            )
         )
 
     contenido.bind(
@@ -618,7 +526,13 @@ def abrir_servientrega():
         actualizar_scroll
     )
 
-    def ajustar_ancho(event):
+    # ========================================================
+    # AJUSTAR ANCHO DEL CONTENIDO
+    # ========================================================
+
+    def ajustar_ancho(
+        event
+    ):
 
         canvas.itemconfigure(
             ventana_canvas,
@@ -629,6 +543,47 @@ def abrir_servientrega():
         "<Configure>",
         ajustar_ancho
     )
+
+    # ========================================================
+    # SCROLL DEL MOUSE
+    #
+    # IMPORTANTE:
+    # NO usamos bind_all().
+    # ========================================================
+
+    def scroll_mouse(
+        event
+    ):
+
+        canvas.yview_scroll(
+            int(
+                -1 *
+                (event.delta / 120)
+            ),
+            "units"
+        )
+
+        return "break"
+
+    # ========================================================
+    # ACTIVAR SCROLL SOLO EN ESTA VENTANA
+    # ========================================================
+
+    def activar_scroll(
+        widget
+    ):
+
+        widget.bind(
+            "<MouseWheel>",
+            scroll_mouse,
+            add="+"
+        )
+
+        for hijo in widget.winfo_children():
+
+            activar_scroll(
+                hijo
+            )
 
     # ========================================================
     # DESTINATARIOS
@@ -652,7 +607,11 @@ def abrir_servientrega():
         text="DESTINATARIOS",
         bg=BLANCO,
         fg=AZUL_OSCURO,
-        font=("Segoe UI", 11, "bold")
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        )
     ).pack(
         anchor="w",
         padx=20,
@@ -670,15 +629,19 @@ def abrir_servientrega():
 
     seleccion_correo = {}
 
-    predeterminados = DESTINATARIOS_POR_DEFECTO.get(
-        "Servientrega",
-        []
+    predeterminados = (
+        DESTINATARIOS_POR_DEFECTO.get(
+            "Servientrega",
+            []
+        )
     )
 
     for nombre, correo in CORREOS_DESTINO.items():
 
         variable = tk.BooleanVar(
-            value=nombre in predeterminados
+            value=(
+                nombre in predeterminados
+            )
         )
 
         casilla = tk.Checkbutton(
@@ -690,7 +653,10 @@ def abrir_servientrega():
             activebackground=BLANCO,
             activeforeground=AZUL_OSCURO,
             selectcolor=AZUL_SUAVE,
-            font=("Segoe UI", 10),
+            font=(
+                "Segoe UI",
+                10
+            ),
             anchor="w",
             cursor="hand2"
         )
@@ -701,7 +667,9 @@ def abrir_servientrega():
             pady=2
         )
 
-        seleccion_correo[nombre] = variable
+        seleccion_correo[
+            nombre
+        ] = variable
 
     tk.Frame(
         tarjeta_destino,
@@ -726,19 +694,26 @@ def abrir_servientrega():
     # VALIDACIONES
     # ========================================================
 
-    def validar_cedula(valor):
+    def validar_cedula(
+        valor
+    ):
 
         if valor == "":
             return True
 
         return len(valor) <= 13
 
-    def validar_telefono(valor):
+    def validar_telefono(
+        valor
+    ):
 
         if valor == "":
             return True
 
-        return len(valor) <= 13 and valor.isdigit()
+        return (
+            len(valor) <= 13
+            and valor.isdigit()
+        )
 
     validar_cedula_cmd = ventana.register(
         validar_cedula
@@ -770,7 +745,11 @@ def abrir_servientrega():
         text="INFORMACIÓN DEL ENVÍO",
         bg=BLANCO,
         fg=AZUL_OSCURO,
-        font=("Segoe UI", 11, "bold")
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        )
     ).pack(
         anchor="w",
         padx=20,
@@ -909,7 +888,9 @@ def abrir_servientrega():
     combo_provincia = ttk.Combobox(
         tarjeta_info,
         textvariable=provincia_var,
-        values=list(PROVINCIAS_CIUDADES.keys()),
+        values=list(
+            PROVINCIAS_CIUDADES.keys()
+        ),
         state="readonly",
         style="Servientrega.TCombobox"
     )
@@ -947,7 +928,9 @@ def abrir_servientrega():
     # ACTUALIZAR CIUDADES
     # ========================================================
 
-    def actualizar_ciudades(event=None):
+    def actualizar_ciudades(
+        event=None
+    ):
 
         provincia = provincia_var.get()
 
@@ -956,7 +939,60 @@ def abrir_servientrega():
             []
         )
 
-        combo_ciudad["values"] = ciudades
+        # ----------------------------------------------------
+        # Si la estructura viene como:
+        #
+        # Provincia:
+        #     Cantón:
+        #         [localidades]
+        #
+        # convertimos todo en una sola lista.
+        # ----------------------------------------------------
+
+        lista_ciudades = []
+
+        if isinstance(
+            ciudades,
+            dict
+        ):
+
+            for canton, localidades in ciudades.items():
+
+                # Agregamos el cantón
+                lista_ciudades.append(
+                    canton
+                )
+
+                # Agregamos localidades
+                if isinstance(
+                    localidades,
+                    list
+                ):
+
+                    lista_ciudades.extend(
+                        localidades
+                    )
+
+        elif isinstance(
+            ciudades,
+            list
+        ):
+
+            lista_ciudades = ciudades
+
+        # ----------------------------------------------------
+        # Eliminar duplicados conservando orden
+        # ----------------------------------------------------
+
+        lista_ciudades = list(
+            dict.fromkeys(
+                lista_ciudades
+            )
+        )
+
+        combo_ciudad["values"] = (
+            lista_ciudades
+        )
 
         ciudad_var.set("")
 
@@ -991,7 +1027,7 @@ def abrir_servientrega():
     )
 
     # ========================================================
-    # CORREO
+    # CORREO ELECTRÓNICO
     # ========================================================
 
     crear_label(
@@ -1036,7 +1072,11 @@ def abrir_servientrega():
         text="OBSERVACIONES",
         bg=BLANCO,
         fg=AZUL_OSCURO,
-        font=("Segoe UI", 11, "bold")
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        )
     ).pack(
         anchor="w",
         padx=20,
@@ -1064,7 +1104,10 @@ def abrir_servientrega():
         highlightthickness=1,
         highlightbackground=BORDE,
         highlightcolor=AZUL,
-        font=("Segoe UI", 10)
+        font=(
+            "Segoe UI",
+            10
+        )
     )
 
     entrada_observaciones.pack(
@@ -1079,14 +1122,46 @@ def abrir_servientrega():
 
     def generar_correo():
 
+        # ----------------------------------------------------
+        # CAMPOS OBLIGATORIOS
+        # ----------------------------------------------------
+
         campos_obligatorios = [
-            ("Vendedor", vendedor_var.get()),
-            ("Cliente", cliente_var.get()),
-            ("Cédula", cedula_var.get()),
-            ("Teléfono", telefono_var.get()),
-            ("Provincia", provincia_var.get()),
-            ("Ciudad", ciudad_var.get()),
-            ("Dirección", direccion_var.get())
+
+            (
+                "Vendedor",
+                vendedor_var.get()
+            ),
+
+            (
+                "Cliente",
+                cliente_var.get()
+            ),
+
+            (
+                "Cédula",
+                cedula_var.get()
+            ),
+
+            (
+                "Teléfono",
+                telefono_var.get()
+            ),
+
+            (
+                "Provincia",
+                provincia_var.get()
+            ),
+
+            (
+                "Ciudad",
+                ciudad_var.get()
+            ),
+
+            (
+                "Dirección",
+                direccion_var.get()
+            )
         ]
 
         for nombre, valor in campos_obligatorios:
@@ -1123,7 +1198,10 @@ def abrir_servientrega():
 
         telefono = telefono_var.get().strip()
 
-        if not telefono.isdigit() or len(telefono) > 13:
+        if (
+            not telefono.isdigit()
+            or len(telefono) > 13
+        ):
 
             messagebox.showwarning(
                 "Teléfono inválido",
@@ -1191,6 +1269,10 @@ Correo Electrónico: {correo_var.get()}
 Observaciones: {observaciones}
 """
 
+        # ----------------------------------------------------
+        # DESTINATARIOS
+        # ----------------------------------------------------
+
         correo_destino = ",".join(
             correos_seleccionados
         )
@@ -1234,12 +1316,14 @@ Gracias.
             f"&body={urllib.parse.quote(cuerpo)}"
         )
 
-        webbrowser.open(enlace)
+        webbrowser.open(
+            enlace
+        )
 
         ventana.destroy()
 
     # ========================================================
-    # BOTÓN
+    # BOTÓN GENERAR CORREO
     # ========================================================
 
     espacio_boton = tk.Frame(
@@ -1257,7 +1341,11 @@ Gracias.
         text="✉  GENERAR CORREO",
         width=25,
         height=2,
-        font=("Segoe UI", 11, "bold"),
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        ),
         bg=AZUL,
         fg=BLANCO,
         activebackground=AZUL_CLARO,
@@ -1277,23 +1365,44 @@ Gracias.
     )
 
     # ========================================================
-    # SCROLL DEL MOUSE
+    # ACTIVAR SCROLL
+    #
+    # NO USAMOS bind_all()
     # ========================================================
 
-    def scroll_mouse(event):
-
-        canvas.yview_scroll(
-            int(-1 * (event.delta / 120)),
-            "units"
-        )
-
-    canvas.bind_all(
-        "<MouseWheel>",
-        scroll_mouse
+    activar_scroll(
+        contenido
     )
 
     # ========================================================
-    # CENTRAR
+    # CERRAR VENTANA
+    # ========================================================
+
+    def cerrar_ventana():
+
+        try:
+
+            canvas.unbind(
+                "<MouseWheel>"
+            )
+
+            contenido.unbind(
+                "<MouseWheel>"
+            )
+
+        except Exception:
+
+            pass
+
+        ventana.destroy()
+
+    ventana.protocol(
+        "WM_DELETE_WINDOW",
+        cerrar_ventana
+    )
+
+    # ========================================================
+    # CENTRAR VENTANA
     # ========================================================
 
     ventana.update_idletasks()
@@ -1317,7 +1426,7 @@ Gracias.
     )
 
     # ========================================================
-    # ENFOCAR
+    # ENFOCAR CLIENTE
     # ========================================================
 
     entrada_cliente.focus()

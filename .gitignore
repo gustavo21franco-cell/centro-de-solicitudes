@@ -1,4 +1,17 @@
-__pycache__/
+﻿__pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Archivos generados por PyInstaller
+build/
+dist/
+
+# Instalador generado
+instalador/
+
+# Copias de respaldo locales
+DATOS/geografia_ecuador_backup.json
+
+# Archivo de versión local de cada PC
+DATOS/version_local.json

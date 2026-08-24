@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
 import os
+import threading
+
 
 # ============================================================
 # IMPORTAR FORMULARIOS
@@ -11,12 +13,19 @@ from formularios.transporte import abrir_transporte
 from formularios.servientrega import abrir_servientrega
 from formularios.mayor import abrir_mayor
 
+from comprobar_actualizacion import (
+    comprobar_actualizacion,
+    obtener_version_local
+)
+
 
 # ============================================================
 # CONFIGURACIÓN PRINCIPAL
 # ============================================================
 
 NOMBRE_APP = "Centro de Solicitudes"
+
+VERSION_PROGRAMA = "1.0.0"
 
 ANCHO_NORMAL = 900
 ALTO_NORMAL = 850
@@ -48,7 +57,7 @@ SOMBRA = "#D8E0E8"
 
 
 # ============================================================
-# RUTA BASE DEL PROYECTO
+# RUTA BASE
 # ============================================================
 
 BASE_DIR = os.path.dirname(
@@ -62,7 +71,9 @@ BASE_DIR = os.path.dirname(
 
 root = tk.Tk()
 
-root.title(NOMBRE_APP)
+root.title(
+    NOMBRE_APP
+)
 
 root.geometry(
     f"{ANCHO_NORMAL}x{ALTO_NORMAL}"
@@ -73,7 +84,6 @@ root.minsize(
     ALTO_MINIMO
 )
 
-# La ventana puede redimensionarse
 root.resizable(
     True,
     True
@@ -89,7 +99,9 @@ RUTA_ICONO = os.path.join(
     "logo.ico"
 )
 
-if os.path.exists(RUTA_ICONO):
+if os.path.exists(
+    RUTA_ICONO
+):
 
     try:
 
@@ -98,6 +110,7 @@ if os.path.exists(RUTA_ICONO):
         )
 
     except Exception:
+
         pass
 
 
@@ -132,7 +145,10 @@ def obtener_escala():
     ancho = root.winfo_width()
     alto = root.winfo_height()
 
-    if ancho <= 1 or alto <= 1:
+    if (
+        ancho <= 1
+        or alto <= 1
+    ):
 
         return 1.0
 
@@ -143,9 +159,6 @@ def obtener_escala():
     escala_alto = (
         alto / ALTO_NORMAL
     )
-
-    # Se utiliza la menor escala
-    # para conservar proporciones.
 
     escala = min(
         escala_ancho,
@@ -212,6 +225,7 @@ def agregar_hover(
             )
 
         except Exception:
+
             pass
 
     def salir(event):
@@ -224,6 +238,7 @@ def agregar_hover(
             )
 
         except Exception:
+
             pass
 
     widget.bind(
@@ -305,6 +320,90 @@ def actualizar_fecha_hora():
 
 
 # ============================================================
+# VERSIÓN INICIAL DE DATOS
+# ============================================================
+
+version_datos_inicial = (
+    obtener_version_local()
+)
+
+
+# ============================================================
+# ACTUALIZACIÓN AUTOMÁTICA
+# ============================================================
+
+def ejecutar_comprobacion_actualizacion():
+
+    try:
+
+        resultado = (
+            comprobar_actualizacion()
+        )
+
+        if isinstance(
+            resultado,
+            dict
+        ):
+
+            root.after(
+                0,
+                mostrar_actualizacion_completada,
+                resultado
+            )
+
+    except Exception as error:
+
+        print(
+            "Error comprobando actualización:",
+            error
+        )
+
+
+def mostrar_actualizacion_completada(
+    resultado
+):
+
+    version_anterior = (
+        resultado.get(
+            "version_anterior",
+            ""
+        )
+    )
+
+    version_nueva = (
+        resultado.get(
+            "version_nueva",
+            ""
+        )
+    )
+
+    # --------------------------------------------------------
+    # ACTUALIZAR TEXTO DE VERSIÓN
+    # --------------------------------------------------------
+
+    pie_label.configure(
+        text=(
+            "JETELL  •  Centro de Solicitudes"
+            f"  •  Programa: {VERSION_PROGRAMA}"
+            f"  |  Datos: {version_nueva}"
+        )
+    )
+
+    # --------------------------------------------------------
+    # MOSTRAR AVISO
+    # --------------------------------------------------------
+
+    messagebox.showinfo(
+        "Actualización de datos",
+        "Los datos geográficos fueron "
+        "actualizados correctamente.\n\n"
+        f"Versión anterior: {version_anterior}\n"
+        f"Nueva versión: {version_nueva}\n\n"
+        "La nueva información ya está disponible."
+    )
+
+
+# ============================================================
 # FRAME PRINCIPAL
 # ============================================================
 
@@ -353,7 +452,6 @@ logo_frame.place(
     anchor="w"
 )
 
-
 logo_label = None
 logo_imagen = None
 
@@ -367,8 +465,9 @@ RUTA_LOGO = os.path.join(
     "logo all colors (6).png"
 )
 
-
-if os.path.exists(RUTA_LOGO):
+if os.path.exists(
+    RUTA_LOGO
+):
 
     try:
 
@@ -383,8 +482,6 @@ if os.path.exists(RUTA_LOGO):
         alto_logo = (
             logo_imagen.height()
         )
-
-        # Reducir si la imagen es demasiado grande
 
         if (
             ancho_logo > 130
@@ -589,7 +686,6 @@ tarjetas.pack(
     pady=10
 )
 
-
 tarjetas.grid_columnconfigure(
     0,
     weight=1
@@ -625,10 +721,6 @@ def crear_tarjeta(
     comando
 ):
 
-    # ========================================================
-    # MARCO EXTERIOR
-    # ========================================================
-
     tarjeta = tk.Frame(
         tarjetas,
         bg=SOMBRA,
@@ -654,11 +746,6 @@ def crear_tarjeta(
         weight=1
     )
 
-
-    # ========================================================
-    # MARCO INTERNO
-    # ========================================================
-
     interior = tk.Frame(
         tarjeta,
         bg=BLANCO,
@@ -671,11 +758,6 @@ def crear_tarjeta(
         padx=2,
         pady=2
     )
-
-
-    # ========================================================
-    # ICONO
-    # ========================================================
 
     icono_label = tk.Label(
         interior,
@@ -692,11 +774,6 @@ def crear_tarjeta(
         pady=(30, 10)
     )
 
-
-    # ========================================================
-    # TÍTULO
-    # ========================================================
-
     titulo_widget = tk.Label(
         interior,
         text=titulo,
@@ -712,11 +789,6 @@ def crear_tarjeta(
     titulo_widget.pack(
         pady=5
     )
-
-
-    # ========================================================
-    # DESCRIPCIÓN
-    # ========================================================
 
     descripcion_widget = tk.Label(
         interior,
@@ -735,11 +807,6 @@ def crear_tarjeta(
         padx=15,
         pady=(5, 20)
     )
-
-
-    # ========================================================
-    # BOTÓN
-    # ========================================================
 
     boton = tk.Button(
         interior,
@@ -765,21 +832,11 @@ def crear_tarjeta(
         pady=(0, 25)
     )
 
-
-    # ========================================================
-    # HOVER DEL BOTÓN
-    # ========================================================
-
     agregar_hover(
         boton,
         color,
         color_hover
     )
-
-
-    # ========================================================
-    # HOVER DE LA TARJETA
-    # ========================================================
 
     def hover_tarjeta_entrar(event):
 
@@ -790,8 +847,8 @@ def crear_tarjeta(
             )
 
         except Exception:
-            pass
 
+            pass
 
     def hover_tarjeta_salir(event):
 
@@ -802,8 +859,8 @@ def crear_tarjeta(
             )
 
         except Exception:
-            pass
 
+            pass
 
     tarjeta.bind(
         "<Enter>",
@@ -814,7 +871,6 @@ def crear_tarjeta(
         "<Leave>",
         hover_tarjeta_salir
     )
-
 
     return tarjeta
 
@@ -883,9 +939,17 @@ pie.pack_propagate(
 )
 
 
+# ============================================================
+# VERSIÓN DEL PROGRAMA Y DATOS
+# ============================================================
+
 pie_label = tk.Label(
     pie,
-    text="JETELL  •  Centro de Solicitudes",
+    text=(
+        "JETELL  •  Centro de Solicitudes"
+        f"  •  Programa: {VERSION_PROGRAMA}"
+        f"  |  Datos: {version_datos_inicial}"
+    ),
     bg=BLANCO,
     fg=GRIS,
     font=(
@@ -903,22 +967,27 @@ pie_label.pack(
 # REDIMENSIONAMIENTO
 # ============================================================
 
-def actualizar_diseno(event=None):
+def actualizar_diseno(
+    event=None
+):
 
     global escala_actual
 
     ancho = root.winfo_width()
     alto = root.winfo_height()
 
-    if ancho <= 1 or alto <= 1:
+    if (
+        ancho <= 1
+        or alto <= 1
+    ):
+
         return
 
     nueva_escala = obtener_escala()
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # EVITAR ACTUALIZACIONES INNECESARIAS
-    # ========================================================
+    # --------------------------------------------------------
 
     if (
         abs(
@@ -929,13 +998,11 @@ def actualizar_diseno(event=None):
 
         return
 
-
     escala_actual = nueva_escala
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # ENCABEZADO
-    # ========================================================
+    # --------------------------------------------------------
 
     alto_encabezado = int(
         170 * nueva_escala
@@ -951,10 +1018,9 @@ def actualizar_diseno(event=None):
         height=alto_encabezado
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # JETELL
-    # ========================================================
+    # --------------------------------------------------------
 
     tam_jetell = int(
         30 * nueva_escala
@@ -976,10 +1042,9 @@ def actualizar_diseno(event=None):
         )
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # TÍTULO
-    # ========================================================
+    # --------------------------------------------------------
 
     tam_titulo = int(
         16 * nueva_escala
@@ -1001,10 +1066,9 @@ def actualizar_diseno(event=None):
         )
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # FECHA
-    # ========================================================
+    # --------------------------------------------------------
 
     tam_fecha = int(
         12 * nueva_escala
@@ -1025,10 +1089,9 @@ def actualizar_diseno(event=None):
         )
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # HORA
-    # ========================================================
+    # --------------------------------------------------------
 
     tam_hora = int(
         22 * nueva_escala
@@ -1050,10 +1113,9 @@ def actualizar_diseno(event=None):
         )
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # SUBTÍTULO
-    # ========================================================
+    # --------------------------------------------------------
 
     tam_subtitulo = int(
         21 * nueva_escala
@@ -1075,10 +1137,9 @@ def actualizar_diseno(event=None):
         )
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # DESCRIPCIÓN
-    # ========================================================
+    # --------------------------------------------------------
 
     tam_descripcion = int(
         11 * nueva_escala
@@ -1099,10 +1160,9 @@ def actualizar_diseno(event=None):
         )
     )
 
-
-    # ========================================================
-    # MÁRGENES DE LAS TARJETAS
-    # ========================================================
+    # --------------------------------------------------------
+    # MÁRGENES
+    # --------------------------------------------------------
 
     if nueva_escala < 0.65:
 
@@ -1160,11 +1220,17 @@ def centrar_ventana():
     )
 
     x = int(
-        (pantalla_ancho - ancho) / 2
+        (
+            pantalla_ancho
+            - ancho
+        ) / 2
     )
 
     y = int(
-        (pantalla_alto - alto) / 2
+        (
+            pantalla_alto
+            - alto
+        ) / 2
     )
 
     root.geometry(
@@ -1173,6 +1239,18 @@ def centrar_ventana():
 
 
 centrar_ventana()
+
+
+# ============================================================
+# COMPROBAR ACTUALIZACIONES AUTOMÁTICAMENTE
+# ============================================================
+
+hilo_actualizacion = threading.Thread(
+    target=ejecutar_comprobacion_actualizacion,
+    daemon=True
+)
+
+hilo_actualizacion.start()
 
 
 # ============================================================

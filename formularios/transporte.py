@@ -3,8 +3,12 @@ from tkinter import messagebox, ttk
 import webbrowser
 import urllib.parse
 import os
+import json
 
-from config import CORREOS_DESTINO, DESTINATARIOS_POR_DEFECTO
+from config import (
+    CORREOS_DESTINO,
+    DESTINATARIOS_POR_DEFECTO
+)
 
 
 # ============================================================
@@ -158,310 +162,143 @@ CASAS_TRANSPORTE = [
 
 
 # ============================================================
-# PROVINCIAS Y CIUDADES
+# CARGAR GEOGRAFÍA
 # ============================================================
 
-PROVINCIAS_CIUDADES = {
+def cargar_geografia():
 
-    "Azuay": [
-        "Cuenca",
-        "Camilo Ponce Enríquez",
-        "Chordeleg",
-        "El Pan",
-        "Girón",
-        "Guachapala",
-        "Gualaceo",
-        "Nabón",
-        "Oña",
-        "Paute",
-        "Pucará",
-        "San Fernando",
-        "Santa Isabel",
-        "Sevilla de Oro",
-        "Sígsig"
-    ],
+    base_dir = os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
 
-    "Bolívar": [
-        "Caluma",
-        "Chillanes",
-        "Chimbo",
-        "Echeandía",
-        "Guaranda",
-        "Las Naves",
-        "San Miguel"
-    ],
+    archivo_geografia = os.path.join(
+        base_dir,
+        "DATOS",
+        "geografia_ecuador.json"
+    )
 
-    "Cañar": [
-        "Azogues",
-        "Biblián",
-        "Cañar",
-        "Déleg",
-        "El Tambo",
-        "La Troncal",
-        "Suscal"
-    ],
+    if not os.path.exists(archivo_geografia):
 
-    "Carchi": [
-        "Bolívar",
-        "Espejo",
-        "Mira",
-        "Montúfar",
-        "San Pedro de Huaca",
-        "Tulcán"
-    ],
+        messagebox.showerror(
+            "Error de datos",
+            "No se encontró el archivo:\n\n"
+            "DATOS/geografia_ecuador.json\n\n"
+            "Verifique la instalación del programa."
+        )
 
-    "Chimborazo": [
-        "Alausí",
-        "Chambo",
-        "Chunchi",
-        "Colta",
-        "Cumandá",
-        "Guamote",
-        "Guano",
-        "Pallatanga",
-        "Penipe",
-        "Riobamba"
-    ],
+        return {}
 
-    "Cotopaxi": [
-        "La Maná",
-        "Latacunga",
-        "Pangua",
-        "Pujilí",
-        "Salcedo",
-        "Saquisilí",
-        "Sigchos"
-    ],
+    try:
 
-    "El Oro": [
-        "Arenillas",
-        "Atahualpa",
-        "Balsas",
-        "Chilla",
-        "El Guabo",
-        "Huaquillas",
-        "Las Lajas",
-        "Machala",
-        "Marcabelí",
-        "Pasaje",
-        "Piñas",
-        "Portovelo",
-        "Santa Rosa",
-        "Zaruma"
-    ],
+        with open(
+            archivo_geografia,
+            "r",
+            encoding="utf-8"
+        ) as archivo:
 
-    "Esmeraldas": [
-        "Atacames",
-        "Eloy Alfaro",
-        "Esmeraldas",
-        "Muisne",
-        "Quinindé",
-        "Rioverde",
-        "San Lorenzo"
-    ],
+            datos = json.load(archivo)
 
-    "Galápagos": [
-        "Isabela",
-        "San Cristóbal",
-        "Santa Cruz"
-    ],
+        if not isinstance(datos, dict):
 
-    "Guayas": [
-        "Alfredo Baquerizo Moreno",
-        "Balao",
-        "Balzar",
-        "Colimes",
-        "Coronel Marcelino Maridueña",
-        "Daule",
-        "Durán",
-        "El Empalme",
-        "El Triunfo",
-        "General Antonio Elizalde",
-        "Guayaquil",
-        "Isidro Ayora",
-        "Lomas de Sargentillo",
-        "Milagro",
-        "Naranjal",
-        "Naranjito",
-        "Nobol",
-        "Palestina",
-        "Pedro Carbo",
-        "Playas",
-        "Salitre",
-        "Samborondón",
-        "Santa Lucía",
-        "Simón Bolívar",
-        "Yaguachi"
-    ],
+            raise ValueError(
+                "El archivo de geografía no tiene "
+                "una estructura válida."
+            )
 
-    "Imbabura": [
-        "Antonio Ante",
-        "Cotacachi",
-        "Ibarra",
-        "Otavalo",
-        "Pimampiro",
-        "San Miguel de Urcuquí"
-    ],
+        if len(datos) != 24:
 
-    "Loja": [
-        "Calvas",
-        "Catamayo",
-        "Celica",
-        "Chaguarpamba",
-        "Espíndola",
-        "Gonzanamá",
-        "Loja",
-        "Macará",
-        "Olmedo",
-        "Paltas",
-        "Pindal",
-        "Puyango",
-        "Quilanga",
-        "Saraguro",
-        "Sozoranga",
-        "Zapotillo"
-    ],
+            raise ValueError(
+                f"El archivo contiene {len(datos)} "
+                "provincias. Se esperaban 24."
+            )
 
-    "Los Ríos": [
-        "Baba",
-        "Babahoyo",
-        "Buena Fe",
-        "Mocache",
-        "Montalvo",
-        "Palenque",
-        "Puebloviejo",
-        "Quevedo",
-        "Quinsaloma",
-        "Urdaneta",
-        "Valencia",
-        "Ventanas",
-        "Vinces"
-    ],
+        return datos
 
-    "Manabí": [
-        "24 de Mayo",
-        "Bolívar",
-        "Chone",
-        "El Carmen",
-        "Flavio Alfaro",
-        "Jama",
-        "Jaramijó",
-        "Jipijapa",
-        "Junín",
-        "Manta",
-        "Montecristi",
-        "Olmedo",
-        "Paján",
-        "Pedernales",
-        "Pichincha",
-        "Portoviejo",
-        "Puerto López",
-        "Rocafuerte",
-        "San Vicente",
-        "Santa Ana",
-        "Sucre",
-        "Tosagua"
-    ],
+    except Exception as error:
 
-    "Morona Santiago": [
-        "Gualaquiza",
-        "Huamboya",
-        "Limón Indanza",
-        "Logroño",
-        "Morona",
-        "Pablo Sexto",
-        "Palora",
-        "San Juan Bosco",
-        "Santiago",
-        "Sucúa",
-        "Taisha"
-    ],
+        messagebox.showerror(
+            "Error de geografía",
+            "No se pudo cargar la información geográfica.\n\n"
+            f"Detalle:\n{error}"
+        )
 
-    "Napo": [
-        "Archidona",
-        "Carlos Julio Arosemena Tola",
-        "El Chaco",
-        "Quijos",
-        "Tena"
-    ],
+        return {}
 
-    "Orellana": [
-        "Aguarico",
-        "La Joya de los Sachas",
-        "Loreto",
-        "Francisco de Orellana EL COCA"
-    ],
 
-    "Pastaza": [
-        "Arajuno",
-        "Mera",
-        "Pastaza",
-        "Santa Clara"
-    ],
+# ============================================================
+# CONSTRUIR LISTA DE CIUDADES Y LOCALIDADES
+# ============================================================
 
-    "Pichincha": [
-        "Cayambe",
-        "Mejía",
-        "Pedro Moncayo",
-        "Pedro Vicente Maldonado",
-        "Puerto Quito",
-        "Quito",
-        "Rumiñahui",
-        "San Miguel de los Bancos"
-    ],
+def construir_provincias_ciudades(datos):
 
-    "Santa Elena": [
-        "La Libertad",
-        "Salinas",
-        "Santa Elena"
-    ],
+    resultado = {}
 
-    "Santo Domingo de los Tsáchilas": [
-        "La Concordia",
-        "Santo Domingo"
-    ],
+    for provincia, cantones in datos.items():
 
-    "Sucumbíos": [
-        "Cascales",
-        "Cuyabeno",
-        "Gonzalo Pizarro",
-        "Lago Agrio",
-        "Putumayo",
-        "Shushufindi",
-        "Sucumbíos"
-    ],
+        localidades_provincia = []
 
-    "Tungurahua": [
-        "Ambato",
-        "Baños de Agua Santa",
-        "Cevallos",
-        "Mocha",
-        "Patate",
-        "Pelileo",
-        "Píllaro",
-        "Quero",
-        "Tisaleo"
-    ],
+        if not isinstance(cantones, dict):
+            continue
 
-    "Zamora Chinchipe": [
-        "Centinela del Cóndor",
-        "Chinchipe",
-        "El Pangui",
-        "Nangaritza",
-        "Palanda",
-        "Paquisha",
-        "Yacuambi",
-        "Yantzaza",
-        "Zamora"
-    ]
-}
+        for canton, localidades in cantones.items():
+
+            # ------------------------------------------------
+            # AGREGAR CANTÓN
+            # ------------------------------------------------
+
+            if (
+                isinstance(canton, str)
+                and canton.strip()
+                and canton.strip()
+                not in localidades_provincia
+            ):
+
+                localidades_provincia.append(
+                    canton.strip()
+                )
+
+            # ------------------------------------------------
+            # AGREGAR LOCALIDADES
+            # ------------------------------------------------
+
+            if isinstance(localidades, list):
+
+                for localidad in localidades:
+
+                    if not isinstance(
+                        localidad,
+                        str
+                    ):
+                        continue
+
+                    localidad = localidad.strip()
+
+                    if (
+                        localidad
+                        and localidad
+                        not in localidades_provincia
+                    ):
+
+                        localidades_provincia.append(
+                            localidad
+                        )
+
+        resultado[provincia] = localidades_provincia
+
+    return resultado
 
 
 # ============================================================
 # FUNCIONES VISUALES
 # ============================================================
 
-def crear_label(parent, texto, obligatorio=False):
+def crear_label(
+    parent,
+    texto,
+    obligatorio=False
+):
 
     frame = tk.Frame(
         parent,
@@ -476,10 +313,18 @@ def crear_label(parent, texto, obligatorio=False):
 
     etiqueta = tk.Label(
         frame,
-        text=texto + (" *" if obligatorio else ""),
+        text=texto + (
+            " *"
+            if obligatorio
+            else ""
+        ),
         bg=BLANCO,
         fg=TEXTO,
-        font=("Segoe UI", 10, "bold"),
+        font=(
+            "Segoe UI",
+            10,
+            "bold"
+        ),
         anchor="w"
     )
 
@@ -501,20 +346,31 @@ def estilizar_entry(entry):
         highlightthickness=1,
         highlightbackground=BORDE,
         highlightcolor=AZUL,
-        font=("Segoe UI", 10)
+        font=(
+            "Segoe UI",
+            10
+        )
     )
 
 
-def agregar_hover(boton, normal, hover):
+def agregar_hover(
+    boton,
+    normal,
+    hover
+):
 
     boton.bind(
         "<Enter>",
-        lambda e: boton.configure(bg=hover)
+        lambda e: boton.configure(
+            bg=hover
+        )
     )
 
     boton.bind(
         "<Leave>",
-        lambda e: boton.configure(bg=normal)
+        lambda e: boton.configure(
+            bg=normal
+        )
     )
 
 
@@ -524,12 +380,44 @@ def agregar_hover(boton, normal, hover):
 
 def abrir_transporte():
 
+    # ========================================================
+    # CARGAR GEOGRAFÍA ACTUALIZADA
+    # ========================================================
+
+    datos_geografia = cargar_geografia()
+
+    if not datos_geografia:
+        return
+
+    PROVINCIAS_CIUDADES = (
+        construir_provincias_ciudades(
+            datos_geografia
+        )
+    )
+
+    # ========================================================
+    # CREAR VENTANA
+    # ========================================================
+
     ventana = tk.Toplevel()
 
-    ventana.title("Envío por Transporte")
-    ventana.geometry("620x900")
-    ventana.minsize(560, 760)
-    ventana.resizable(True, True)
+    ventana.title(
+        "Envío por Transporte"
+    )
+
+    ventana.geometry(
+        "620x900"
+    )
+
+    ventana.minsize(
+        560,
+        760
+    )
+
+    ventana.resizable(
+        True,
+        True
+    )
 
     ventana.configure(
         bg=FONDO
@@ -550,10 +438,16 @@ def abrir_transporte():
         "logo.ico"
     )
 
-    if os.path.exists(ruta_icono):
+    if os.path.exists(
+        ruta_icono
+    ):
 
         try:
-            ventana.iconbitmap(ruta_icono)
+
+            ventana.iconbitmap(
+                ruta_icono
+            )
+
         except Exception:
             pass
 
@@ -564,7 +458,11 @@ def abrir_transporte():
     estilo = ttk.Style()
 
     try:
-        estilo.theme_use("clam")
+
+        estilo.theme_use(
+            "clam"
+        )
+
     except Exception:
         pass
 
@@ -577,16 +475,25 @@ def abrir_transporte():
         lightcolor=BORDE,
         darkcolor=BORDE,
         padding=7,
-        font=("Segoe UI", 10)
+        font=(
+            "Segoe UI",
+            10
+        )
     )
 
     estilo.map(
         "Transporte.TCombobox",
         fieldbackground=[
-            ("readonly", BLANCO)
+            (
+                "readonly",
+                BLANCO
+            )
         ],
         foreground=[
-            ("readonly", TEXTO)
+            (
+                "readonly",
+                TEXTO
+            )
         ]
     )
 
@@ -604,7 +511,9 @@ def abrir_transporte():
         fill="x"
     )
 
-    encabezado.pack_propagate(False)
+    encabezado.pack_propagate(
+        False
+    )
 
     # ========================================================
     # LOGO
@@ -617,7 +526,9 @@ def abrir_transporte():
 
     logo_imagen = None
 
-    if os.path.exists(ruta_logo):
+    if os.path.exists(
+        ruta_logo
+    ):
 
         try:
 
@@ -628,7 +539,10 @@ def abrir_transporte():
             ancho = logo_imagen.width()
             alto = logo_imagen.height()
 
-            if ancho > 100 or alto > 80:
+            if (
+                ancho > 100
+                or alto > 80
+            ):
 
                 factor_x = max(
                     1,
@@ -645,16 +559,20 @@ def abrir_transporte():
                     factor_y
                 )
 
-                logo_imagen = logo_imagen.subsample(
-                    factor,
-                    factor
+                logo_imagen = (
+                    logo_imagen.subsample(
+                        factor,
+                        factor
+                    )
                 )
 
-            tk.Label(
+            logo_label = tk.Label(
                 encabezado,
                 image=logo_imagen,
                 bg=AZUL_OSCURO
-            ).place(
+            )
+
+            logo_label.place(
                 x=25,
                 rely=0.5,
                 anchor="w"
@@ -672,7 +590,11 @@ def abrir_transporte():
         text="JETELL",
         bg=AZUL_OSCURO,
         fg=BLANCO,
-        font=("Segoe UI", 22, "bold")
+        font=(
+            "Segoe UI",
+            22,
+            "bold"
+        )
     ).place(
         x=145,
         y=38,
@@ -688,7 +610,11 @@ def abrir_transporte():
         text="SOLICITUD DE ENVÍO POR TRANSPORTE",
         bg=AZUL_OSCURO,
         fg="#DCEBFA",
-        font=("Segoe UI", 10, "bold")
+        font=(
+            "Segoe UI",
+            10,
+            "bold"
+        )
     ).place(
         x=145,
         y=70,
@@ -737,10 +663,18 @@ def abrir_transporte():
         anchor="nw"
     )
 
-    def actualizar_scroll(event=None):
+    # ========================================================
+    # ACTUALIZAR SCROLL
+    # ========================================================
+
+    def actualizar_scroll(
+        event=None
+    ):
 
         canvas.configure(
-            scrollregion=canvas.bbox("all")
+            scrollregion=canvas.bbox(
+                "all"
+            )
         )
 
     contenido.bind(
@@ -748,7 +682,13 @@ def abrir_transporte():
         actualizar_scroll
     )
 
-    def ajustar_ancho(event):
+    # ========================================================
+    # AJUSTAR ANCHO DEL CONTENIDO
+    # ========================================================
+
+    def ajustar_ancho(
+        event
+    ):
 
         canvas.itemconfigure(
             ventana_canvas,
@@ -782,7 +722,11 @@ def abrir_transporte():
         text="DESTINATARIOS",
         bg=BLANCO,
         fg=AZUL_OSCURO,
-        font=("Segoe UI", 11, "bold")
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        )
     ).pack(
         anchor="w",
         padx=20,
@@ -800,15 +744,22 @@ def abrir_transporte():
 
     seleccion_correo = {}
 
-    predeterminados = DESTINATARIOS_POR_DEFECTO.get(
-        "Transporte",
-        []
+    predeterminados = (
+        DESTINATARIOS_POR_DEFECTO.get(
+            "Transporte",
+            []
+        )
     )
 
-    for nombre, correo in CORREOS_DESTINO.items():
+    for nombre, correo in (
+        CORREOS_DESTINO.items()
+    ):
 
         variable = tk.BooleanVar(
-            value=nombre in predeterminados
+            value=(
+                nombre
+                in predeterminados
+            )
         )
 
         casilla = tk.Checkbutton(
@@ -820,7 +771,10 @@ def abrir_transporte():
             activebackground=BLANCO,
             activeforeground=AZUL_OSCURO,
             selectcolor=AZUL_SUAVE,
-            font=("Segoe UI", 10),
+            font=(
+                "Segoe UI",
+                10
+            ),
             anchor="w",
             cursor="hand2"
         )
@@ -831,7 +785,9 @@ def abrir_transporte():
             pady=2
         )
 
-        seleccion_correo[nombre] = variable
+        seleccion_correo[
+            nombre
+        ] = variable
 
     tk.Frame(
         tarjeta_destino,
@@ -857,26 +813,37 @@ def abrir_transporte():
     # VALIDACIONES
     # ========================================================
 
-    def validar_cedula(valor):
+    def validar_cedula(
+        valor
+    ):
 
         if valor == "":
             return True
 
         return len(valor) <= 13
 
-    def validar_telefono(valor):
+    def validar_telefono(
+        valor
+    ):
 
         if valor == "":
             return True
 
-        return len(valor) <= 13 and valor.isdigit()
+        return (
+            len(valor) <= 13
+            and valor.isdigit()
+        )
 
-    validar_cedula_cmd = ventana.register(
-        validar_cedula
+    validar_cedula_cmd = (
+        ventana.register(
+            validar_cedula
+        )
     )
 
-    validar_telefono_cmd = ventana.register(
-        validar_telefono
+    validar_telefono_cmd = (
+        ventana.register(
+            validar_telefono
+        )
     )
 
     # ========================================================
@@ -901,7 +868,11 @@ def abrir_transporte():
         text="INFORMACIÓN DEL ENVÍO",
         bg=BLANCO,
         fg=AZUL_OSCURO,
-        font=("Segoe UI", 11, "bold")
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        )
     ).pack(
         anchor="w",
         padx=20,
@@ -1055,23 +1026,36 @@ def abrir_transporte():
     # BUSCAR TRANSPORTE
     # ========================================================
 
-    def buscar_transporte(event=None):
+    def buscar_transporte(
+        event=None
+    ):
 
-        texto = transporte_var.get().strip().lower()
+        texto = (
+            transporte_var
+            .get()
+            .strip()
+            .lower()
+        )
 
         if not texto:
 
-            combo_transporte["values"] = CASAS_TRANSPORTE
+            combo_transporte[
+                "values"
+            ] = CASAS_TRANSPORTE
 
             return
 
         resultados = [
             transporte
-            for transporte in CASAS_TRANSPORTE
-            if texto in transporte.lower()
+            for transporte
+            in CASAS_TRANSPORTE
+            if texto
+            in transporte.lower()
         ]
 
-        combo_transporte["values"] = resultados
+        combo_transporte[
+            "values"
+        ] = resultados
 
     combo_transporte.bind(
         "<KeyRelease>",
@@ -1091,7 +1075,9 @@ def abrir_transporte():
     combo_provincia = ttk.Combobox(
         tarjeta_info,
         textvariable=provincia_var,
-        values=list(PROVINCIAS_CIUDADES.keys()),
+        values=list(
+            PROVINCIAS_CIUDADES.keys()
+        ),
         state="readonly",
         style="Transporte.TCombobox"
     )
@@ -1129,16 +1115,24 @@ def abrir_transporte():
     # ACTUALIZAR CIUDADES
     # ========================================================
 
-    def actualizar_ciudades(event=None):
+    def actualizar_ciudades(
+        event=None
+    ):
 
-        provincia = provincia_var.get()
-
-        ciudades = PROVINCIAS_CIUDADES.get(
-            provincia,
-            []
+        provincia = (
+            provincia_var.get()
         )
 
-        combo_ciudad["values"] = ciudades
+        ciudades = (
+            PROVINCIAS_CIUDADES.get(
+                provincia,
+                []
+            )
+        )
+
+        combo_ciudad[
+            "values"
+        ] = ciudades
 
         ciudad_var.set("")
 
@@ -1217,7 +1211,11 @@ def abrir_transporte():
         text="OBSERVACIONES",
         bg=BLANCO,
         fg=AZUL_OSCURO,
-        font=("Segoe UI", 11, "bold")
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        )
     ).pack(
         anchor="w",
         padx=20,
@@ -1245,7 +1243,10 @@ def abrir_transporte():
         highlightthickness=1,
         highlightbackground=BORDE,
         highlightcolor=AZUL,
-        font=("Segoe UI", 10)
+        font=(
+            "Segoe UI",
+            10
+        )
     )
 
     entrada_observaciones.pack(
@@ -1265,37 +1266,66 @@ def abrir_transporte():
         # ----------------------------------------------------
 
         campos_obligatorios = [
-            ("Cliente", cliente_var.get()),
-            ("Vendedor", vendedor_var.get()),
-            ("Cédula", cedula_var.get()),
-            ("Teléfono", telefono_var.get()),
-            ("Casa de Transporte", transporte_var.get()),
-            ("Provincia", provincia_var.get()),
-            ("Ciudad", ciudad_var.get())
+            (
+                "Cliente",
+                cliente_var.get()
+            ),
+            (
+                "Vendedor",
+                vendedor_var.get()
+            ),
+            (
+                "Cédula",
+                cedula_var.get()
+            ),
+            (
+                "Teléfono",
+                telefono_var.get()
+            ),
+            (
+                "Casa de Transporte",
+                transporte_var.get()
+            ),
+            (
+                "Provincia",
+                provincia_var.get()
+            ),
+            (
+                "Ciudad",
+                ciudad_var.get()
+            )
         ]
 
-        for nombre, valor in campos_obligatorios:
+        for nombre, valor in (
+            campos_obligatorios
+        ):
 
             if not valor.strip():
 
                 messagebox.showwarning(
                     "Campo obligatorio",
-                    f"Debe completar el campo:\n\n{nombre}"
+                    "Debe completar el campo:\n\n"
+                    f"{nombre}"
                 )
 
                 return
 
         # ----------------------------------------------------
-        # VALIDACIÓN EXTRA DE CÉDULA
+        # VALIDACIÓN CÉDULA
         # ----------------------------------------------------
 
-        cedula = cedula_var.get().strip()
+        cedula = (
+            cedula_var
+            .get()
+            .strip()
+        )
 
         if len(cedula) > 13:
 
             messagebox.showwarning(
                 "Cédula inválida",
-                "La Cédula no puede tener más de 13 caracteres."
+                "La Cédula no puede tener "
+                "más de 13 caracteres."
             )
 
             entrada_cedula.focus()
@@ -1303,17 +1333,25 @@ def abrir_transporte():
             return
 
         # ----------------------------------------------------
-        # VALIDACIÓN EXTRA DE TELÉFONO
+        # VALIDACIÓN TELÉFONO
         # ----------------------------------------------------
 
-        telefono = telefono_var.get().strip()
+        telefono = (
+            telefono_var
+            .get()
+            .strip()
+        )
 
-        if not telefono.isdigit() or len(telefono) > 13:
+        if (
+            not telefono.isdigit()
+            or len(telefono) > 13
+        ):
 
             messagebox.showwarning(
                 "Teléfono inválido",
-                "El teléfono debe contener únicamente números "
-                "y tener máximo 13 dígitos."
+                "El teléfono debe contener "
+                "únicamente números y tener "
+                "máximo 13 dígitos."
             )
 
             entrada_telefono.focus()
@@ -1326,13 +1364,18 @@ def abrir_transporte():
 
         correos_seleccionados = []
 
-        for nombre, variable in seleccion_correo.items():
+        for (
+            nombre,
+            variable
+        ) in seleccion_correo.items():
 
             if variable.get():
 
-                correo = CORREOS_DESTINO.get(
-                    nombre,
-                    ""
+                correo = (
+                    CORREOS_DESTINO.get(
+                        nombre,
+                        ""
+                    )
                 )
 
                 if correo:
@@ -1354,10 +1397,14 @@ def abrir_transporte():
         # OBSERVACIONES
         # ----------------------------------------------------
 
-        observaciones = entrada_observaciones.get(
-            "1.0",
-            "end-1c"
-        ).strip()
+        observaciones = (
+            entrada_observaciones
+            .get(
+                "1.0",
+                "end-1c"
+            )
+            .strip()
+        )
 
         # ----------------------------------------------------
         # DATOS DEL FORMULARIO
@@ -1390,7 +1437,7 @@ Observaciones: {observaciones}
         # ----------------------------------------------------
 
         asunto = (
-            f"ENVIO POR TRANSPORTE "
+            "ENVIO POR TRANSPORTE "
             f"{vendedor_var.get().strip()} - "
             f"{cliente_var.get().strip()}"
         )
@@ -1424,9 +1471,14 @@ Gracias.
             f"&body={urllib.parse.quote(cuerpo)}"
         )
 
-        webbrowser.open(enlace)
+        webbrowser.open(
+            enlace
+        )
 
-        # Cerrar solamente el formulario
+        # ----------------------------------------------------
+        # CERRAR FORMULARIO
+        # ----------------------------------------------------
+
         ventana.destroy()
 
     # ========================================================
@@ -1448,7 +1500,11 @@ Gracias.
         text="✉  GENERAR CORREO",
         width=25,
         height=2,
-        font=("Segoe UI", 11, "bold"),
+        font=(
+            "Segoe UI",
+            11,
+            "bold"
+        ),
         bg=AZUL,
         fg=BLANCO,
         activebackground=AZUL_CLARO,
@@ -1468,19 +1524,67 @@ Gracias.
     )
 
     # ========================================================
-    # SCROLL CON RUEDA DEL MOUSE
+    # SCROLL DEL FORMULARIO
     # ========================================================
 
     def scroll_mouse(event):
 
-        canvas.yview_scroll(
-            int(-1 * (event.delta / 120)),
-            "units"
-        )
+        # ----------------------------------------------------
+        # NO MOVER COMBOBOX CON LA RUEDA
+        # ----------------------------------------------------
+
+        if event.widget in (
+            combo_provincia,
+            combo_ciudad,
+            combo_transporte
+        ):
+
+            return "break"
+
+        # ----------------------------------------------------
+        # MOVER EL FORMULARIO
+        # ----------------------------------------------------
+
+        if event.delta:
+
+            canvas.yview_scroll(
+                int(
+                    -1 *
+                    (
+                        event.delta / 120
+                    )
+                ),
+                "units"
+            )
+
+        return "break"
+
+    # --------------------------------------------------------
+    # SCROLL GENERAL
+    # --------------------------------------------------------
 
     canvas.bind_all(
         "<MouseWheel>",
         scroll_mouse
+    )
+
+    # --------------------------------------------------------
+    # BLOQUEAR RUEDA EN COMBOBOX
+    # --------------------------------------------------------
+
+    combo_provincia.bind(
+        "<MouseWheel>",
+        lambda event: "break"
+    )
+
+    combo_ciudad.bind(
+        "<MouseWheel>",
+        lambda event: "break"
+    )
+
+    combo_transporte.bind(
+        "<MouseWheel>",
+        lambda event: "break"
     )
 
     # ========================================================
@@ -1492,15 +1596,26 @@ Gracias.
     ancho = ventana.winfo_width()
     alto = ventana.winfo_height()
 
-    pantalla_ancho = ventana.winfo_screenwidth()
-    pantalla_alto = ventana.winfo_screenheight()
+    pantalla_ancho = (
+        ventana.winfo_screenwidth()
+    )
+
+    pantalla_alto = (
+        ventana.winfo_screenheight()
+    )
 
     x = int(
-        (pantalla_ancho - ancho) / 2
+        (
+            pantalla_ancho
+            - ancho
+        ) / 2
     )
 
     y = int(
-        (pantalla_alto - alto) / 2
+        (
+            pantalla_alto
+            - alto
+        ) / 2
     )
 
     ventana.geometry(
